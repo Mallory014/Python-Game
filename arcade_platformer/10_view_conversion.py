@@ -92,7 +92,7 @@ class PlatformerView(arcade.View):
         """Sets up the game for the current level"""
 
         # Get the current map based on the level
-        map_name = f"platform_level_{self.level:02}.tmx"
+        map_name = f"platform_level_{self.level:02}.tmj"
         map_path = ASSETS_PATH / map_name
 
         # What are the names of the layers?
@@ -103,7 +103,7 @@ class PlatformerView(arcade.View):
         ladders_layer = "ladders"
 
         # Load the current map
-        map = arcade.tilemap.read_tmx(str(map_path))
+        self.tile_map = arcade.load_tilemap(map_path)
 
         # Load the layers
         self.background = arcade.tilemap.process_layer(

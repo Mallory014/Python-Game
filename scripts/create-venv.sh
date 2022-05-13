@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-python3 -m venv .venv
+py -m venv .venv
 . ./.venv/bin/activate
 pip install --upgrade pip

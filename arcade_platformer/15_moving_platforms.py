@@ -324,29 +324,29 @@ class PlatformerView(arcade.View):
         ladders_layer = "ladders"
 
         # Load the current map
-        game_map = arcade.tilemap.read_tmx(str(map_path))
+        self.tile_map = arcade.load_tilemap(map_path)
 
         # Load the layers
         self.background = arcade.tilemap.process_layer(
-            game_map, layer_name=background_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=background_layer, scaling=MAP_SCALING
         )
         self.goals = arcade.tilemap.process_layer(
-            game_map, layer_name=goal_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=goal_layer, scaling=MAP_SCALING
         )
         self.walls = arcade.tilemap.process_layer(
-            game_map, layer_name=wall_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=wall_layer, scaling=MAP_SCALING
         )
         self.ladders = arcade.tilemap.process_layer(
-            game_map, layer_name=ladders_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=ladders_layer, scaling=MAP_SCALING
         )
         self.coins = arcade.tilemap.process_layer(
-            game_map, layer_name=coin_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=coin_layer, scaling=MAP_SCALING
         )
 
         # Process moving platforms
         moving_platforms_layer_name = "moving_platforms"
         moving_platforms = arcade.tilemap.process_layer(
-            game_map,
+            self.tile_map,
             layer_name=moving_platforms_layer_name,
             scaling=MAP_SCALING,
         )
@@ -355,14 +355,14 @@ class PlatformerView(arcade.View):
 
         # Set the background color
         background_color = arcade.color.FRESH_AIR
-        if game_map.background_color:
-            background_color = game_map.background_color
+        if self.tile_map.background_color:
+            background_color = self.tile_map.background_color
         arcade.set_background_color(background_color)
 
         # Find the edge of the map to control viewport scrolling
         self.map_width = (
-            game_map.map_size.width - 1
-        ) * game_map.tile_size.width
+            self.tile_map.map_size.width - 1
+        ) * self.tile_map.tile_size.width
 
         # Create the player sprite, if they're not already setup
         if not self.player:

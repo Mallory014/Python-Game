@@ -419,7 +419,7 @@ class PlatformerView(arcade.View):
         """Sets up the game for the current level"""
 
         # Get the current map based on the level
-        map_name = f"platform_level_{self.level:02}.tmx"
+        map_name = f"platform_level_{self.level:02}.tmj"
         map_path = ASSETS_PATH / map_name
 
         # What are the names of the layers?
@@ -430,29 +430,29 @@ class PlatformerView(arcade.View):
         ladders_layer = "ladders"
 
         # Load the current map
-        map = arcade.tilemap.read_tmx(str(map_path))
+        self.tile_map = arcade.load_tilemap(map_path)
 
         # Load the layers
         self.background = arcade.tilemap.process_layer(
-            map, layer_name=background_layer, scaling=game.MAP_SCALING
+            self.tile_map, layer_name=background_layer, scaling=game.MAP_SCALING
         )
         self.goals = arcade.tilemap.process_layer(
-            map, layer_name=goal_layer, scaling=game.MAP_SCALING
+            self.tile_map, layer_name=goal_layer, scaling=game.MAP_SCALING
         )
         self.walls = arcade.tilemap.process_layer(
-            map, layer_name=wall_layer, scaling=game.MAP_SCALING
+            self.tile_map, layer_name=wall_layer, scaling=game.MAP_SCALING
         )
         self.ladders = arcade.tilemap.process_layer(
-            map, layer_name=ladders_layer, scaling=game.MAP_SCALING
+            self.tile_map, layer_name=ladders_layer, scaling=game.MAP_SCALING
         )
         self.coins = arcade.tilemap.process_layer(
-            map, layer_name=coin_layer, scaling=game.MAP_SCALING
+            self.tile_map, layer_name=coin_layer, scaling=game.MAP_SCALING
         )
 
         # Process moving platforms
         moving_platforms_layer_name = "moving_platforms"
         moving_platforms = arcade.tilemap.process_layer(
-            map,
+            self.tile_map,
             layer_name=moving_platforms_layer_name,
             scaling=game.MAP_SCALING,
         )

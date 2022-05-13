@@ -70,7 +70,7 @@ class Platformer(arcade.Window):
         """Sets up the game for the current level"""
 
         # Get the current map based on the level
-        map_name = f"platform_level_{self.level:02}.tmx"
+        map_name = f"platform_level_{self.level:02}.tmj"
         map_path = ASSETS_PATH / map_name
 
         # What are the names of the layers?
@@ -81,29 +81,29 @@ class Platformer(arcade.Window):
         ladders_layer = "ladders"
 
         # Load the current map
-        game_map = arcade.tilemap.read_tmx(str(map_path))
+        self.tile_map = arcade.load_tilemap(map_path)
 
         # Load the layers
         self.background = arcade.tilemap.process_layer(
-            game_map, layer_name=background_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=background_layer, scaling=MAP_SCALING
         )
         self.goals = arcade.tilemap.process_layer(
-            game_map, layer_name=goal_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=goal_layer, scaling=MAP_SCALING
         )
         self.walls = arcade.tilemap.process_layer(
-            game_map, layer_name=wall_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=wall_layer, scaling=MAP_SCALING
         )
         self.ladders = arcade.tilemap.process_layer(
-            game_map, layer_name=ladders_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=ladders_layer, scaling=MAP_SCALING
         )
         self.coins = arcade.tilemap.process_layer(
-            game_map, layer_name=coin_layer, scaling=MAP_SCALING
+            self.tile_map, layer_name=coin_layer, scaling=MAP_SCALING
         )
 
         # Set the background color
         background_color = arcade.color.FRESH_AIR
-        if game_map.background_color:
-            background_color = game_map.background_color
+        if self.tile_map.background_color:
+            background_color = self.tile_map.background_color
         arcade.set_background_color(background_color)
 
         # Create the player sprite, if they're not already setup
