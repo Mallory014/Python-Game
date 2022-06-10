@@ -10,11 +10,24 @@ Assets downloaded from:
 
 Tilemaps created with https://www.mapeditor.org/, donation suggested.
 
-# Setup for development:
+# Setup for development for mac:
 
 - Setup a python 3.x venv (usually in `.venv`)
   - You can run `./scripts/create-venv.sh` to generate one
 - `pip3 install --upgrade pip`
+- Install pip-tools `pip3 install pip-tools`
+- Update dev requirements: `pip-compile --output-file=requirements.dev.txt requirements.dev.in --upgrade`
+- Update requirements: `pip-compile --output-file=requirements.txt requirements.in --upgrade`
+- Install dev requirements `pip3 install -r requirements.dev.txt`
+- Install requirements `pip3 install -r requirements.txt`
+- `pre-commit install`
+
+# Setup for development for Windows:
+
+- Setup a python 3.x venv (usually in `.venv`)
+  - You can run `scripts\create-venv.sh` to generate one
+  - activate using .venv\Activate.ps1
+- `python -m pip install --upgrade pip`
 - Install pip-tools `pip3 install pip-tools`
 - Update dev requirements: `pip-compile --output-file=requirements.dev.txt requirements.dev.in --upgrade`
 - Update requirements: `pip-compile --output-file=requirements.txt requirements.in --upgrade`
